@@ -1,7 +1,14 @@
+# environment 
 .venv/*
+
+# caches of notebooks
 .ipynb_checkpoints
 *.pyc
 
-
+# dataset
 pro/data/spamdata/
 pro/data/txtdata
+
+# test files
+test.ipynb
+test*.ipynb
