@@ -6,7 +6,6 @@ import pandas as pd
 from sklearn.model_selection import KFold 
 from pro.data.text_preprosseing import clean_text, normalize, remove_stopwords
 
-
 DIR_PATH = Path(os.path.abspath(__file__)).parent
 
 class TextData(BaseModel): 
@@ -37,15 +36,16 @@ class TextDatas(BaseModel):
     
         textdata_list = []
 
-        textdata_list.append(cls.read_data(txt_data_path_1, 1, output=output,))
-        textdata_list.append(cls.read_data(txt_data_path_0, 0, output=output,))
+        textdata_list += (cls.read_data(txt_data_path_1, 1, output=output,))
+        textdata_list += (cls.read_data(txt_data_path_0, 0, output=output,))
 
         cls.txt_data_path_1 = txt_data_path_1
         cls.txt_data_path_0 = txt_data_path_0
 
         return cls(textdata_list=textdata_list)
-
-    def read_data( self, 
+    
+    @staticmethod
+    def read_data(  
             txt_data_path, 
             label: int, 
             header: bool = False, 
