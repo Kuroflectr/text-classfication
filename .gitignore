@@ -1,9 +1,6 @@
 .venv/*
-__init__.py
 .ipynb_checkpoints
 *.pyc
-test*
-test.ipynb
 
 
 pro/data/spamdata/
