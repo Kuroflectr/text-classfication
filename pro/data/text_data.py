@@ -12,14 +12,18 @@ from bs4 import BeautifulSoup
 from torch.utils.data import Dataset
 import torch
 
-DIR_PATH = Path(os.path.dirname(os.path.abspath(__file__)))
-TXT_FILE_DIR_1 = DIR_PATH / "txt" / "label_1"
-TXT_FILE_DIR_0 = DIR_PATH / "txt" / "label_0"
+DIR_PATH = Path(os.path.abspath(__file__)).parent
+
 
 # ============================================================
 #                 TextData Class defination
 # ============================================================
 class TextData(BaseModel): 
+    """declare a TextData object
+
+    Args:
+        BaseModel (_type_): _description_
+    """
     url: str 
     title: str 
     content: str
@@ -34,30 +38,35 @@ class TextDatas(BaseModel):
     @classmethod
     def from_txt(
             cls, 
-            header=False, 
-            output=False,  
-        ):
+            filepath="txtdata", 
+            output=False,  ):
 
-        # print(TXT_FILE_DIR_1.absolute())
+        
+        txt_file_dir_1 = DIR_PATH / filepath / "label_1"
+        txt_file_dir_0 = DIR_PATH / filepath / "label_0"
 
-        txt_data_path_1 = sorted(TXT_FILE_DIR_1.glob('*.txt'))
-        txt_data_path_0 = sorted(TXT_FILE_DIR_0.glob('*.txt')) 
+        txt_data_path_1 = sorted(txt_file_dir_1.glob('*.txt'))
+        txt_data_path_0 = sorted(txt_file_dir_0.glob('*.txt')) 
     
         textdata_list = []
         textdata_list = read_data(textdata_list, txt_data_path_1, 1, output=output, )
         textdata_list = read_data(textdata_list, txt_data_path_0, 0, output=output, )
 
+        cls.txt_data_path_1 = txt_data_path_1
+        cls.txt_data_path_0 = txt_data_path_0
+
         return cls(textdata_list=textdata_list)
 
-    def get_filename_list(self): 
-        txt_data_path_1 = sorted(TXT_FILE_DIR_1.glob('*.txt'))
-        txt_data_path_0 = sorted(TXT_FILE_DIR_0.glob('*.txt')) 
+    def get_filename_list(self) -> List : 
+        txt_data_path_1 = self.txt_data_path_1
+        txt_data_path_0 = self.txt_data_path_0
         filename_list = [None] * (len(list(txt_data_path_1))+len(list(txt_data_path_0)))
         for i in range(len(list(txt_data_path_1))): 
             filename_list[i] = txt_data_path_1[i].name
         for i in range(len(list(txt_data_path_0))): 
             filename_list[i+  len(list(txt_data_path_1)) ] = txt_data_path_0[i].name
         return filename_list
+
 
     def set_filename_list(self): 
         if len(self.filename_list) == 0: 

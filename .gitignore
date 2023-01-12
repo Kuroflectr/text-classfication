@@ -12,3 +12,4 @@ pro/data/txtdata
 # test files
 test.ipynb
 test*.ipynb
+test.py
