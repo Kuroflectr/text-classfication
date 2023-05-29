@@ -13,3 +13,7 @@ pro/data/txtdata
 test.ipynb
 test*.ipynb
 test.py
+
+
+poetry.lock
+pyproject.toml
