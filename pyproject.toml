@@ -2,7 +2,7 @@
 name = "text-classfication-lin"
 version = "0.1.0"
 description = ""
-authors = ["peihsuanlin5566 <jnes40722@gmail.com>"]
+authors = ["Kuroflectr <ike.kuroflectr@gmail.com>"]
 readme = "README.md"
 packages = [
     {include = "pro"}
